@@ -14,7 +14,6 @@ for(i=0; i<85; i++)
 }
 selectYear.innerHTML = optionYear;
 year = today.getFullYear() - 18;
-setMonths();
 
 function genderChange(gender)
 {

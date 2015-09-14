@@ -47,7 +47,11 @@
 	$flag["lname"] = checkCharacterLimit($lname);
 	$flag["fname"] = checkCharacterLimit($fname);
 	$flag["gender"] = checkCharacterLimit($gender);
-	if( !empty($year) && !empty($month) && !empty($day) )
+	if( $flag["gender"] && ( $gender!='M' && $gender!='F' ) )
+	{
+		$flag["gender"] = 0;
+	}
+	if( !empty($year) && !empty($month) && !empty($day) && preg_match("/^[0-9]+$/", $year) && preg_match("/^[0-9]+$/", $month) && preg_match("/^[0-9]+$/", $day) )
 	{
 		// Check if birthdate is equal to or older than 18 years
 		$birthdate_compare = date( 'Y-m-d', strtotime( $year . "-" . $month . "-" . $day ) );
@@ -81,9 +85,11 @@
 			$gender = mysqli_real_escape_string($con, $gender);
 			$about = mysqli_real_escape_string($con, $about);
 
-			$q = "SELECT username FROM user WHERE username=" . $username;
+			$q = "SELECT username FROM user WHERE username='" . $username . "';";
 
-			if( !mysqli_query($con,$q) )
+			$result = mysqli_query($con,$q);
+
+			if( !$result )
 			{
 				// Columns to be updated
 				$columns = "username, password, salutation, first_name, last_name, gender, birthdate, about";
@@ -127,11 +133,11 @@
 	{
 		// Display error message if one or more flags returned 0
 		echo "<br>Error: One or more inputs are invalid!";
-		/*foreach($flag as $key => $value)
+		foreach($flag as $key => $value)
 		{
 			echo "<br>" . $key . ": " . $value;
-		}*/
+		}
 	}
 	
-	redirect("login.html");
+	//redirect("login.html");
 ?>
