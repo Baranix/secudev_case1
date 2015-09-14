@@ -133,11 +133,11 @@
 	{
 		// Display error message if one or more flags returned 0
 		echo "<br>Error: One or more inputs are invalid!";
-		foreach($flag as $key => $value)
+		/*foreach($flag as $key => $value)
 		{
 			echo "<br>" . $key . ": " . $value;
-		}
+		}*/
 	}
 	
-	//redirect("login.html");
+	redirect("login.html");
 ?>
